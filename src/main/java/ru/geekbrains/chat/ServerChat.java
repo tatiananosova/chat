@@ -1,5 +1,7 @@
 package ru.geekbrains.chat;
 
+import org.apache.log4j.Logger;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -7,6 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ServerChat implements Chat {
+    private static final Logger logger = Logger.getLogger(ServerChat.class);
+
     private ServerSocket serverSocket;
     private Set<ClientHandler> clients;
     private AuthenticationService authenticationService;
@@ -19,15 +23,16 @@ public class ServerChat implements Chat {
         return authenticationService;
     }
     private void start() {
+        logger.info("Starting server");
         try {
             serverSocket = new ServerSocket(8888);
             clients = new HashSet<>();
             authenticationService = new AuthenticationService();
             while (true) {
-                System.out.println("Server is waiting to connection ...");
+                logger.info("Server is waiting to connection ...");
                 Socket socket = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(socket, this);
-                System.out.println(String.format("[%s] Client[%s] is successfully connected", new Date(), clientHandler.getName()));
+                logger.info(String.format("[%s] Client[%s] is successfully connected", new Date(), clientHandler.getName()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,6 +40,7 @@ public class ServerChat implements Chat {
     }
     @Override
     public synchronized void broadcastMessage(String message) {
+        logger.debug("Client sent message " + message);
         for (ClientHandler client : clients) {
             client.sendMessage(message);
         }
