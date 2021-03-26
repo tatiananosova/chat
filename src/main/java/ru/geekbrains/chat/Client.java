@@ -13,7 +13,7 @@ public class Client {
 
     public Client(String host, int port) {
         try {
-            socket = new Socket("127.0.0.1", 8888);
+            socket = new Socket("127.0.0.1", 8189);
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
         } catch (Exception e) {
