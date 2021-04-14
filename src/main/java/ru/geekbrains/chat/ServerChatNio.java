@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class ServerChatNio implements Runnable, Chat {
 
-    public static final int PORT = 8189;
+    public static final int PORT = 8888;
     private final ServerSocketChannel serverSocketChannel;
     private final Selector selector;
     private final ByteBuffer buf = ByteBuffer.allocate(256);
@@ -35,7 +35,7 @@ public class ServerChatNio implements Runnable, Chat {
     @Override
     public void run() {
         try {
-            System.out.println("Сервер запущен (Порт: 8189)");
+            System.out.println("Сервер запущен (Порт: " + PORT + ")");
             Iterator<SelectionKey> iter;
             SelectionKey key;
             while (this.serverSocketChannel.isOpen()) {
