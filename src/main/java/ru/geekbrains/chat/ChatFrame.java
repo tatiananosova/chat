@@ -19,6 +19,7 @@ public class ChatFrame extends JFrame {
 
         setLayout(new BorderLayout());
         textArea = new TextArea();
+        textArea.setEditable(false);
         JPanel top = new JPanel();
         top.setLayout(new BorderLayout());
         top.add(textArea,BorderLayout.CENTER);
